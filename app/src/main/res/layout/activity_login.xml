@@ -4,60 +4,73 @@ xmlns:app="http://schemas.android.com/apk/res-auto"
 xmlns:tools="http://schemas.android.com/tools"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
-android:background="@drawable/background"
+android:background="@drawable/loginbg"
 tools:context=".MainActivity">
 
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="133dp"
+        android:layout_height="114dp"
+        android:src="@drawable/logon"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.188" />
 
-<Button
-    android:id="@+id/logbtn"
-    android:layout_width="141dp"
-    android:layout_height="61dp"
-    android:text="Login"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/pass"
-    app:layout_constraintVertical_bias="0.206" />
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="245dp"
+        android:layout_height="44dp"
+        android:text="your mate in finding lost things!"
+        android:textColor="#272e4c"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.554"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/logo"
+        app:layout_constraintVertical_bias="0.019" />
 
-<EditText
-    android:id="@+id/email"
-    android:layout_width="316dp"
-    android:layout_height="49dp"
-    android:layout_marginTop="24dp"
-    android:ems="10"
-    android:hint="Enter Your Email"
-    android:inputType="text"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintHorizontal_bias="0.496"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/textView"
-    app:layout_constraintVertical_bias="0.081" />
+    <EditText
+        android:id="@+id/email"
+        android:layout_width="316dp"
+        android:layout_height="49dp"
+        android:ems="10"
+        android:hint="Enter Your Email"
+        android:inputType="text"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.526"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        app:layout_constraintVertical_bias="0.1" />
 
-<TextView
-    android:id="@+id/textView"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="Lost and Found Portal"
-    android:textSize="20sp"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintHorizontal_bias="0.476"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent"
-    app:layout_constraintVertical_bias="0.116" />
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/logbtn"
+        android:layout_width="141dp"
+        android:layout_height="61dp"
+        android:text="Login"
+        android:background="@drawable/button_bg"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pass"
+        app:layout_constraintVertical_bias="0.146" />
 
-<EditText
-    android:id="@+id/pass"
-    android:layout_width="319dp"
-    android:layout_height="51dp"
-    android:ems="10"
-    android:hint="Enter Your Pass"
-    android:inputType="text"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintHorizontal_bias="0.51"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/email"
-    app:layout_constraintVertical_bias="0.085" />
+    <EditText
+        android:id="@+id/pass"
+        android:layout_width="319dp"
+        android:layout_height="51dp"
+        android:ems="10"
+        android:hint="Enter Your Pass"
+        android:inputType="text"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.543"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/email"
+        app:layout_constraintVertical_bias="0.069" />
 </androidx.constraintlayout.widget.ConstraintLayout>
