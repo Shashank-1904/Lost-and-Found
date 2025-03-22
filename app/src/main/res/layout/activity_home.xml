@@ -19,8 +19,13 @@
         app:menu="@menu/nav_menu"
         app:headerLayout="@layout/drawable_layout"
         android:layout_gravity="start"
-        app:itemIconPadding="20dp"
-        tools:ignore="MissingConstraints" />
+        app:itemIconPadding="20dp"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
 
     <!-- CoordinatorLayout to manage the Bottom Navigation -->
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -36,5 +41,7 @@
             app:menu="@menu/bottom_menu"
             app:labelVisibilityMode="labeled" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+
 
 </androidx.drawerlayout.widget.DrawerLayout>
