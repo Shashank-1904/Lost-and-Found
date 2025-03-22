@@ -15,7 +15,6 @@
         <activity
             android:name=".activity_home"
             android:exported="true">
-
         </activity>
         <activity
             android:name=".RegisterActivity"
@@ -24,12 +23,17 @@
             android:name=".Login"
             android:exported="false" />
         <activity
+            android:name=".NotificationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".NotificationItemActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
