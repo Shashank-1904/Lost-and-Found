@@ -1,5 +1,6 @@
 package com.example.microprojectmad;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
@@ -14,7 +15,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 public class activity_home extends AppCompatActivity {
 
     DrawerLayout drawerLayout;
-    ImageButton imageButton;
+    ImageButton imageButton,notification;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,11 +24,20 @@ public class activity_home extends AppCompatActivity {
 
         drawerLayout = findViewById(R.id.drawablelayout);
         imageButton = findViewById(R.id.imagebtn);
+        notification = findViewById(R.id.notification);
 
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 drawerLayout.open();
+            }
+        });
+
+        notification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(activity_home.this,NotificationActivity.class);
+                startActivity(intent);
             }
         });
 

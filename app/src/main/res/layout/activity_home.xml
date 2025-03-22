@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/drawablelayout"
@@ -8,17 +9,38 @@
     tools:context=".activity_home"
     tools:openDrawer="start">
 
-    <include layout="@layout/activity_maincontent"></include>
+    <!-- Main Content -->
+    <include layout="@layout/activity_maincontent"/>
 
+    <!-- Navigation Drawer -->
     <com.google.android.material.navigation.NavigationView
-        app:itemIconPadding="20dp"
         android:layout_width="300dp"
         android:layout_height="match_parent"
         app:menu="@menu/nav_menu"
-        tools:ignore="MissingConstraints"
         app:headerLayout="@layout/drawable_layout"
         android:layout_gravity="start"
-        />
+        app:itemIconPadding="20dp"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+
+    <!-- CoordinatorLayout to manage the Bottom Navigation -->
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!-- Bottom Navigation Bar -->
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottom_navigation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            app:menu="@menu/bottom_menu"
+            app:labelVisibilityMode="labeled" />
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 
 
