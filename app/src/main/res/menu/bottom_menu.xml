@@ -5,8 +5,12 @@
         android:title="Home"
         android:icon="@drawable/home" />
     <item
-        android:id="@+id/add"
-        android:title="add"
+        android:id="@+id/report"
+        android:title="Report"
+        android:icon="@drawable/home" />
+    <item
+        android:id="@+id/notification"
+        android:title="Notification"
         android:icon="@drawable/home" />
     <item
         android:id="@+id/profile"
