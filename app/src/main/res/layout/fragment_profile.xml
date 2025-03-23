@@ -3,16 +3,169 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ProfileFragment">
+    tools:context=".ProfileFragment"
+    android:background="@drawable/profilebg">
 
     <!-- TODO: Update blank fragment layout -->
 
-    <Button
-        android:id="@+id/Logout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="Logout" />
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="@color/white" >
+
+        <ImageButton
+            android:layout_marginTop="5dp"
+            android:id="@+id/imagebtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/backarrow"
+            android:background="@color/white"
+            android:padding="5dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Item Details"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:layout_gravity="center"
+            android:textSize="25sp"
+            android:textColor="@color/black"
+            android:layout_marginTop="5dp"/>
+    </androidx.appcompat.widget.Toolbar>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginTop="80dp"
+        android:id="@+id/innerLayout"
+        >
+
+        <ImageButton
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/man"
+            android:scaleType="centerCrop"
+            android:id="@+id/profile_picture">
+
+        </ImageButton>
+
+        <TextView
+            android:id="@+id/user_name"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:text="John Jr. Doe"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:textColor="@color/black">
+
+        </TextView>
+
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="30dp"
+           android:orientation="horizontal"
+           android:id="@+id/edit_profile_layout"
+           android:gravity="center">
+
+           <ImageView
+               android:layout_width="20dp"
+               android:layout_height="20dp"
+               android:background="@drawable/profileedit">
+
+           </ImageView>
+
+           <TextView
+               android:layout_width="wrap_content"
+               android:layout_height="20dp"
+               android:id="@+id/edit_user"
+               android:text="Edit Profile"
+               android:gravity="center"
+               android:textAlignment="center"
+               android:textStyle="bold"
+               android:textColor="@color/black">
+
+           </TextView>
+
+       </LinearLayout>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:hint="Enter Your Name..."
+            android:id="@+id/full_name"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="60dp"
+            android:background="@drawable/edittext_border"
+            android:padding="10dp">
+
+        </EditText>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:hint="Enter Your Email..."
+            android:id="@+id/email"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/edittext_border"
+            android:padding="10dp">
+
+
+    </EditText>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:hint="Enter Your Phone..."
+            android:id="@+id/phone"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/edittext_border"
+            android:padding="10dp"
+            >
+
+        </EditText>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:orientation="horizontal"
+            android:id="@+id/logout_layout"
+            android:layout_marginTop="30dp"
+            android:layout_marginHorizontal="20dp"
+            android:gravity="start"
+            android:background="@drawable/edittext_border"
+
+            >
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:id="@+id/logout_btn"
+                android:layout_gravity="center"
+                android:background="@drawable/logout"
+                android:layout_marginLeft="10dp">
+
+            </ImageView>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Logout"
+                android:textSize="20dp"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:layout_marginHorizontal="10dp"
+                >
+
+            </TextView>
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 
 </FrameLayout>
