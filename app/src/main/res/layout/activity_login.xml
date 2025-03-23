@@ -28,22 +28,35 @@ tools:context=".MainActivity">
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/logo1"
-        app:layout_constraintHorizontal_bias="0.855"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/logo1"
         app:layout_constraintVertical_bias="0.0" />
 
     <ImageView
         android:id="@+id/logo1"
-        android:layout_width="272dp"
-        android:layout_height="227dp"
+        android:layout_width="226dp"
+        android:layout_height="167dp"
         android:src="@drawable/log"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.181" />
+        app:layout_constraintVertical_bias="0.136" />
+
+    <Spinner
+        android:id="@+id/role"
+        android:layout_width="300dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/custom_edittext"
+        android:paddingStart="13dp"
+        app:layout_constraintEnd_toEndOf="@+id/pass"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        app:layout_constraintVertical_bias="0.055"/>
 
     <EditText
         android:id="@+id/email"
@@ -61,7 +74,7 @@ tools:context=".MainActivity">
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        app:layout_constraintTop_toBottomOf="@+id/role"
         app:layout_constraintVertical_bias="0.057" />
 
     <EditText
@@ -106,10 +119,10 @@ tools:context=".MainActivity">
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/logo1"
-        app:layout_constraintHorizontal_bias="0.855"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.554"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/logo1"
-        app:layout_constraintVertical_bias="0.791" />
+        app:layout_constraintVertical_bias="0.826" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

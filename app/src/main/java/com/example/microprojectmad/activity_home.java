@@ -71,9 +71,6 @@ public class activity_home extends AppCompatActivity {
                 else {
                     loadFragment(new ProfileFragment(),false);
                 }
-
-
-
                 return true;
             }
         });

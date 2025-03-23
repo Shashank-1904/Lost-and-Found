@@ -35,8 +35,8 @@
 
     <ImageView
         android:id="@+id/logo1"
-        android:layout_width="224dp"
-        android:layout_height="199dp"
+        android:layout_width="182dp"
+        android:layout_height="163dp"
         android:src="@drawable/log"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -81,7 +81,7 @@
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/uname"
-        app:layout_constraintVertical_bias="0.066" />
+        app:layout_constraintVertical_bias="0.045" />
 
     <EditText
         android:id="@+id/pass"
@@ -100,7 +100,7 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/email"
         app:layout_constraintTop_toBottomOf="@+id/email"
-        app:layout_constraintVertical_bias="0.374" />
+        app:layout_constraintVertical_bias="0.055" />
 
     <EditText
         android:id="@+id/cnfpass"
@@ -111,18 +111,31 @@
         android:drawablePadding="10dp"
         android:elevation="5dp"
         android:ems="10"
-        android:hint="Enter Your Password"
+        android:hint="Enter Your Confirm Password"
         android:inputType="textPassword"
         android:paddingStart="13dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/email"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/email"
-        app:layout_constraintTop_toBottomOf="@+id/email"
-        app:layout_constraintVertical_bias="0.081" />
+        app:layout_constraintStart_toStartOf="@+id/pass"
+        app:layout_constraintTop_toBottomOf="@+id/pass"
+        app:layout_constraintVertical_bias="0.055" />
+
+    <Spinner
+        android:id="@+id/role"
+        android:layout_width="300dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/custom_edittext"
+        android:paddingStart="13dp"
+        app:layout_constraintEnd_toEndOf="@+id/pass"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/cnfpass"
+        app:layout_constraintTop_toBottomOf="@+id/cnfpass"
+        app:layout_constraintVertical_bias="0.055"/>
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/logbtn"
+        android:id="@+id/regbtn"
         android:layout_width="136dp"
         android:layout_height="42dp"
         android:background="@drawable/button_bg"
@@ -132,8 +145,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pass"
-        app:layout_constraintVertical_bias="0.274" />
+        app:layout_constraintTop_toBottomOf="@+id/role"
+        app:layout_constraintVertical_bias="0.296" />
 
     <TextView
         android:id="@+id/loginlink"
@@ -147,7 +160,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.56"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/logbtn"
+        app:layout_constraintTop_toBottomOf="@+id/regbtn"
         app:layout_constraintVertical_bias="0.129" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
