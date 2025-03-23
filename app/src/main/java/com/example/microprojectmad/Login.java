@@ -10,6 +10,17 @@ import android.widget.TextView;
 public class Login extends AppCompatActivity {
 
     TextView registerlink;
+
+//    Item Name
+//    Category
+//    Color
+//    Date Lost
+//    Name
+//    phone NO
+//    email
+//    Image
+//    Reward
+//    Description
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,7 +31,7 @@ public class Login extends AppCompatActivity {
         registerlink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Login.this , activity_home.class);
+                Intent intent = new Intent(Login.this , activity_itemdetail.class);
                 startActivity(intent);
             }
         });
