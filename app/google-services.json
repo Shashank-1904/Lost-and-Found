@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "965012219269",
+    "project_id": "lost-and-found-2ec85",
+    "storage_bucket": "lost-and-found-2ec85.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:965012219269:android:84dfba03ead29b40d850ec",
+        "android_client_info": {
+          "package_name": "com.example.microprojectmad"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCOvhvHpzOymhPQLrJtgOr-x4JEeTWZYUM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
