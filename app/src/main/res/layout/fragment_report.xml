@@ -1,16 +1,167 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginBottom="100dp"
+    android:layout_marginTop="80dp"
+    android:background="@color/white"
     tools:context=".ReportFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Report Fragment"
-        android:gravity="center"
-        android:textSize="20dp"/>
+        android:layout_marginTop="20dp">
+        <!-- Main ScrollView Below Toolbar -->
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:fillViewport="true">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp"
+                android:gravity="center_horizontal">
+
+                <!-- Image Section -->
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp">
+
+                    <TextView
+                        android:id="@+id/toolbar_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="Report New Item"
+                        android:textColor="@color/black"
+                        android:textSize="22sp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <View
+                        android:id="@+id/view2"
+                        android:layout_width="0dp"
+                        android:layout_height="300dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginEnd="16dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:layout_width="250dp"
+                        android:layout_height="250dp"
+                        android:scaleType="centerCrop"
+                        app:strokeColor="@android:color/black"
+                        app:strokeWidth="2dp"
+                        app:shapeAppearanceOverlay="@style/RoundedImageView"
+                        android:src="@drawable/reportimg"
+                        app:layout_constraintBottom_toBottomOf="@+id/view2"
+                        app:layout_constraintEnd_toEndOf="@+id/view2"
+                        app:layout_constraintStart_toStartOf="@+id/view2"
+                        app:layout_constraintTop_toTopOf="@+id/view2" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <!-- Input Fields -->
+                <EditText
+                    android:id="@+id/iname"
+                    android:layout_width="320dp"
+                    android:layout_height="55dp"
+                    android:background="@drawable/custom_edittext"
+                    android:hint="Item Name"
+                    android:inputType="text"
+                    android:layout_marginTop="10dp"
+                    android:paddingStart="13dp" />
+
+                <Spinner
+                    android:id="@+id/spinnerCategory"
+                    android:layout_width="320dp"
+                    android:layout_height="55dp"
+                    android:background="@drawable/custom_edittext"
+                    android:paddingStart="13dp"
+                    android:layout_marginTop="10dp" />
+
+                <EditText
+                    android:id="@+id/icolor"
+                    android:layout_width="320dp"
+                    android:layout_height="55dp"
+                    android:background="@drawable/custom_edittext"
+                    android:hint="Color"
+                    android:inputType="text"
+                    android:layout_marginTop="10dp"
+                    android:paddingStart="13dp" />
+
+                <EditText
+                    android:id="@+id/editTextDate"
+                    android:layout_width="320dp"
+                    android:layout_height="55dp"
+                    android:background="@drawable/custom_edittext"
+                    android:hint="Date Lost"
+                    android:focusable="false"
+                    android:clickable="true"
+                    android:layout_marginTop="10dp"
+                    android:paddingStart="13dp" />
+
+                <EditText
+                    android:id="@+id/ireward"
+                    android:layout_width="320dp"
+                    android:layout_height="55dp"
+                    android:background="@drawable/custom_edittext"
+                    android:hint="Reward"
+                    android:inputType="text"
+                    android:layout_marginTop="10dp"
+                    android:paddingStart="13dp" />
+
+                <Button
+                    android:id="@+id/btnSelectFile"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:text="Select File"
+                    android:textSize="16sp"
+                    android:layout_marginTop="10dp"
+                    android:backgroundTint="#272e4c"
+                    android:textColor="@android:color/white" />
+
+                <ImageView
+                    android:id="@+id/imagePreview"
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:scaleType="centerCrop"
+                    android:layout_marginTop="10dp"
+                    android:visibility="gone" />
+
+                <EditText
+                    android:id="@+id/idscr"
+                    android:layout_width="320dp"
+                    android:layout_height="100dp"
+                    android:background="@drawable/custom_edittext"
+                    android:hint="Description"
+                    android:inputType="textMultiLine"
+                    android:layout_marginTop="10dp"
+                    android:paddingStart="13dp"
+                    android:gravity="top" />
+
+                <!-- Submit Button -->
+                <Button
+                    android:id="@+id/btnSubmit"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:text="Report Item"
+                    android:textSize="18sp"
+                    android:textColor="@android:color/white"
+                    android:backgroundTint="#272e4c"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp" />
+            </LinearLayout>
+        </ScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

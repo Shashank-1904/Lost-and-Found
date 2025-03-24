@@ -60,38 +60,70 @@ public class activity_home extends AppCompatActivity {
                 int itemId = item.getItemId();
 
                 if(itemId == R.id.home){
-                    loadFragment(new HomeFragment(),false);
+                    String userName = getIntent().getStringExtra("userName");
+                    String userEmail = getIntent().getStringExtra("userEmail");
+
+                    Bundle bundle = new Bundle();
+                    bundle.putString("userName", userName);
+                    bundle.putString("userEmail", userEmail);
+                    loadFragment(new ProfileFragment(), false, bundle);
                     
                 } else if (itemId == R.id.report) {
-                    loadFragment(new ReportFragment(),false);
+                    String userName = getIntent().getStringExtra("userName");
+                    String userEmail = getIntent().getStringExtra("userEmail");
+
+                    Bundle bundle = new Bundle();
+                    bundle.putString("userName", userName);
+                    bundle.putString("userEmail", userEmail);
+                    loadFragment(new ReportFragment(), false, bundle);
                     
                 } else if (itemId == R.id.notification) {
-                    loadFragment(new NotificationFragment(),false);
+                    String userName = getIntent().getStringExtra("userName");
+                    String userEmail = getIntent().getStringExtra("userEmail");
+
+                    Bundle bundle = new Bundle();
+                    bundle.putString("userName", userName);
+                    bundle.putString("userEmail", userEmail);
+                    loadFragment(new NotificationFragment(), false, bundle);
                 }
                 else {
-                    loadFragment(new ProfileFragment(),false);
+                    String userName = getIntent().getStringExtra("userName");
+                    String userEmail = getIntent().getStringExtra("userEmail");
+
+                    Bundle bundle = new Bundle();
+                    bundle.putString("userName", userName);
+                    bundle.putString("userEmail", userEmail);
+                    loadFragment(new ProfileFragment(), false, bundle);
                 }
                 return true;
             }
         });
 
-        loadFragment(new HomeFragment(),true);
+        String userName = getIntent().getStringExtra("userName");
+        String userEmail = getIntent().getStringExtra("userEmail");
+
+        Bundle bundle = new Bundle();
+        bundle.putString("userName", userName);
+        bundle.putString("userEmail", userEmail);
+        loadFragment(new HomeFragment(), false, bundle);
 
 
 
     }
-    public void loadFragment(Fragment fragment, boolean isAppInitialized){
+    public void loadFragment(Fragment fragment, boolean isAppInitialized, Bundle data) {
+        if (data != null) {
+            fragment.setArguments(data); // Pass data to fragment
+        }
+
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-        if(isAppInitialized){
-            fragmentTransaction.add(R.id.framelayout,fragment);
-        }else {
+        if (isAppInitialized) {
+            fragmentTransaction.add(R.id.framelayout, fragment);
+        } else {
             fragmentTransaction.replace(R.id.framelayout, fragment);
         }
 
         fragmentTransaction.commit();
-
-
     }
 }
