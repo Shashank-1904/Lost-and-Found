@@ -121,19 +121,6 @@
         app:layout_constraintTop_toBottomOf="@+id/pass"
         app:layout_constraintVertical_bias="0.055" />
 
-    <Spinner
-        android:id="@+id/role"
-        android:layout_width="300dp"
-        android:layout_height="55dp"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/custom_edittext"
-        android:paddingStart="13dp"
-        app:layout_constraintEnd_toEndOf="@+id/pass"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/cnfpass"
-        app:layout_constraintTop_toBottomOf="@+id/cnfpass"
-        app:layout_constraintVertical_bias="0.055"/>
-
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/regbtn"
         android:layout_width="136dp"
@@ -145,7 +132,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/role"
+        app:layout_constraintTop_toBottomOf="@+id/cnfpass"
         app:layout_constraintVertical_bias="0.296" />
 
     <TextView
