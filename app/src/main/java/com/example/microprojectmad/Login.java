@@ -10,6 +10,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -84,18 +88,27 @@ public class Login extends AppCompatActivity {
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                String resp = response.body().string().trim(); // Trim to remove unwanted spaces
+                String resp = response.body().string().trim();
 
-                runOnUiThread(() -> {
-                    if (response.isSuccessful() && resp.equals("failed")) {
-                        Toast.makeText(Login.this, "Login successful", Toast.LENGTH_LONG).show();
-                        Intent intent = new Intent(Login.this, activity_home.class);
-                        startActivity(intent);
-                        finish();
-                    } else {
-                        Toast.makeText(Login.this, "Invalid email or password", Toast.LENGTH_LONG).show();
-                    }
-                });
+                try {
+                    JSONObject jsonResponse = new JSONObject(resp);
+                    String status = jsonResponse.getString("status");
+                    String message = jsonResponse.getString("message");
+
+                    runOnUiThread(() -> {
+                        Toast.makeText(Login.this, message, Toast.LENGTH_LONG).show();
+                        if (status.equals("success")) {
+                            Intent intent = new Intent(Login.this, activity_home.class);
+                            startActivity(intent);
+                            finish();
+                        }
+                    });
+
+                } catch (JSONException e) {
+                    runOnUiThread(() ->
+                            Toast.makeText(Login.this, "Invalid server response", Toast.LENGTH_LONG).show()
+                    );
+                }
             }
         });
     }
