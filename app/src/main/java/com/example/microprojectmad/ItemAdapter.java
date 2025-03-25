@@ -32,8 +32,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Item item = itemList.get(position);
-        holder.title.setText(item.getTitle());
-        holder.description.setText(item.getDescription());
+        holder.title.setText("Item : " + item.getTitle());
+        holder.date.setText("Date : " + item.getDate());
 
         // Optional: Set an image if coming from API
         holder.itemImage.setImageResource(R.drawable.man);
@@ -45,13 +45,13 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView title, description;
+        TextView title, date;
         ImageView itemImage;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.title);
-            description = itemView.findViewById(R.id.description);
+            date = itemView.findViewById(R.id.date);
             itemImage = itemView.findViewById(R.id.itemImage);
         }
     }

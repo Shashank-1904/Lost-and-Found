@@ -2,18 +2,18 @@ package com.example.microprojectmad;
 
 public class Item {
     private String title;
-    private String description;
+    private String date;
 
-    public Item(String title, String description) {
+    public Item(String title, String date) {
         this.title = title;
-        this.description = description;
+        this.date = date;
     }
 
     public String getTitle() {
         return title;
     }
 
-    public String getDescription() {
-        return description;
+    public String getDate() {
+        return date;
     }
 }

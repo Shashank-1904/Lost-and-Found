@@ -3,7 +3,9 @@ package com.example.microprojectmad;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
@@ -65,7 +67,6 @@ public class Login extends AppCompatActivity {
             return;
         }
 
-        // Password validation
         if (passText.isEmpty()) {
             password.setError("Password is required");
             password.requestFocus();
@@ -76,20 +77,16 @@ public class Login extends AppCompatActivity {
         loginUser(emailText, passText);
     }
 
-    private void loginUser(String email, String pass) {
-        // Build request body
+    private void loginUser(String email, String enteredPass) {
         RequestBody formData = new FormBody.Builder()
                 .add("uemail", email)
-                .add("upass", pass) // Sending password
                 .build();
 
-        // Create request
         Request request = new Request.Builder()
                 .url(BASE_URL)
                 .post(formData)
                 .build();
 
-        // Make API call
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
@@ -102,27 +99,42 @@ public class Login extends AppCompatActivity {
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 String resp = response.body().string().trim();
-                Log.d("LOGIN_RESPONSE", "Server Response: " + resp); // Debugging API response
+                Log.d("LOGIN_RESPONSE", "Server Response: " + resp);
 
                 try {
                     JSONObject jsonResponse = new JSONObject(resp);
                     String status = jsonResponse.getString("status");
-                    String message = jsonResponse.getString("message");
 
-                    runOnUiThread(() -> {
-                        Toast.makeText(Login.this, message, Toast.LENGTH_LONG).show();
-                        if ("success".equals(status)) {
-                            Intent intent = new Intent(Login.this, activity_home.class);
-                            startActivity(intent);
-                            finish();
+                    if ("success".equals(status)) {
+                        JSONObject user = jsonResponse.getJSONObject("user");
+                        String storedPass = user.getString("userpass");
+                        String username = user.getString("username"); // Assume API returns username
+
+                        if (enteredPass.equals(storedPass)) {
+                            // Save user session
+                            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(Login.this);
+                            SharedPreferences.Editor editor = preferences.edit();
+                            editor.putString("username", username);
+                            editor.putString("email", email);
+                            editor.putBoolean("isLoggedIn", true);
+                            editor.apply();
+
+                            runOnUiThread(() -> {
+                                Toast.makeText(Login.this, "Login successful!", Toast.LENGTH_LONG).show();
+                                Intent intent = new Intent(Login.this, activity_home.class);
+                                startActivity(intent);
+                                finish();
+                            });
+                        } else {
+                            runOnUiThread(() -> Toast.makeText(Login.this, "Invalid password!", Toast.LENGTH_LONG).show());
                         }
-                    });
-
+                    } else {
+                        String message = jsonResponse.getString("message");
+                        runOnUiThread(() -> Toast.makeText(Login.this, message, Toast.LENGTH_LONG).show());
+                    }
                 } catch (JSONException e) {
                     Log.e("LOGIN_ERROR", "JSON Parsing Error: " + e.getMessage());
-                    runOnUiThread(() ->
-                            Toast.makeText(Login.this, "Invalid server response", Toast.LENGTH_LONG).show()
-                    );
+                    runOnUiThread(() -> Toast.makeText(Login.this, "Invalid server response", Toast.LENGTH_LONG).show());
                 }
             }
         });

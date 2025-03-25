@@ -88,8 +88,8 @@ public class HomeFragment extends Fragment {
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject obj = jsonArray.getJSONObject(i);
                 String title = obj.getString("reportitemname");
-                String dscr = obj.getString("reportitemdscr");
-                itemList.add(new Item(title, dscr));
+                String date = obj.getString("reportitemdate");
+                itemList.add(new Item(title, date));
             }
 
             // Ensure fragment is attached before updating UI

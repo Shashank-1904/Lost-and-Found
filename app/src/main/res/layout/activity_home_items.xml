@@ -4,15 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:paddingBottom="20dp"
-    android:paddingTop="10dp">
+    android:orientation="vertical">
 
     <!-- Background View -->
     <View
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_marginTop="20dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="10dp"
         android:background="@drawable/notification_bg"
         android:layout_marginStart="15dp"
         android:layout_marginEnd="15dp" />
@@ -20,10 +18,10 @@
     <!-- Profile Image -->
     <ImageView
         android:id="@+id/itemImage"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_marginLeft="30dp"
-        android:layout_marginTop="-175dp"
+        android:layout_marginTop="-125dp"
         android:src="@drawable/man" />
 
     <!-- Title Text -->
@@ -31,20 +29,33 @@
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Item Title"
+        android:text="Item :"
         android:textColor="@color/black"
         android:textStyle="bold"
-        android:textSize="25dp"
-        android:layout_marginLeft="200dp"
-        android:layout_marginTop="-140dp"/>
+        android:textSize="17sp"
+        android:layout_marginLeft="150dp"
+        android:layout_marginTop="-110dp"/>
 
     <!-- Description Text -->
     <TextView
-        android:id="@+id/description"
+        android:id="@+id/date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Item Description"
-        android:layout_marginLeft="200dp"
-        android:textSize="20dp"
-        android:textColor="@color/black"/>
+        android:text="Date : "
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:textSize="17sp"
+        android:layout_marginLeft="150dp"
+        android:layout_marginTop="10dp"/>
+
+    <TextView
+        android:id="@+id/reportedby"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Reported By : "
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:textSize="17sp"
+        android:layout_marginLeft="150dp"
+        android:layout_marginTop="10dp"/>
 </LinearLayout>

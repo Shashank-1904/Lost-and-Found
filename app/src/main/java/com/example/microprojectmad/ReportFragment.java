@@ -109,15 +109,7 @@ public class ReportFragment extends Fragment {
         String imagePath = selectedImageUri != null ? selectedImageUri.toString() : "No image selected";
         String itemdscr = idscr.getText().toString();
 
-        String message = "User: " + userEmail +
-                "\nName: " + itemname +
-                "\nCategory: " + itemcategory +
-                "\nColor: " + itemcolor +
-                "\nLost Date: " + itemlostdate +
-                "\nReward: " + itemreward +
-                "\nDescription: " + itemdscr +
-                "\nImage: " + imagePath;
 
-        Toast.makeText(requireContext(), message, Toast.LENGTH_LONG).show();
+
     }
 }
