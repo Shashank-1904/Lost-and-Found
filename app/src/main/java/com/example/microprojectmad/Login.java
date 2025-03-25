@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -25,8 +26,7 @@ import okhttp3.Response;
 
 public class Login extends AppCompatActivity {
 
-    private static final String BASE_URL = "https://lostandfound.creativeitservicess.com/api/user_login.php"; // Replace with actual API URL
-
+    private static final String BASE_URL = "https://lostandfound.creativeitservicess.com/api/user_login.php"; // API URL
     private OkHttpClient client = new OkHttpClient();
 
     EditText email, password;
@@ -38,16 +38,19 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        // Initialize UI elements
         email = findViewById(R.id.email);
         password = findViewById(R.id.pass);
         loginBtn = findViewById(R.id.logbtn);
         registerLink = findViewById(R.id.registerlink);
 
+        // Redirect to Register Activity
         registerLink.setOnClickListener(v -> {
             Intent intent = new Intent(Login.this, RegisterActivity.class);
             startActivity(intent);
         });
 
+        // Handle Login Button Click
         loginBtn.setOnClickListener(view -> validateAndLogin());
     }
 
@@ -55,40 +58,51 @@ public class Login extends AppCompatActivity {
         String emailText = email.getText().toString().trim();
         String passText = password.getText().toString().trim();
 
+        // Email validation
         if (emailText.isEmpty() || !Patterns.EMAIL_ADDRESS.matcher(emailText).matches()) {
             email.setError("Enter a valid email");
             email.requestFocus();
             return;
         }
 
+        // Password validation
         if (passText.isEmpty()) {
             password.setError("Password is required");
             password.requestFocus();
             return;
         }
 
+        // Call login function
         loginUser(emailText, passText);
     }
 
     private void loginUser(String email, String pass) {
+        // Build request body
         RequestBody formData = new FormBody.Builder()
                 .add("uemail", email)
                 .add("upass", pass) // Sending password
                 .build();
 
-        Request request = new Request.Builder().url(BASE_URL).post(formData).build();
+        // Create request
+        Request request = new Request.Builder()
+                .url(BASE_URL)
+                .post(formData)
+                .build();
 
+        // Make API call
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                runOnUiThread(() ->
-                        Toast.makeText(Login.this, "Login failed: " + e.getMessage(), Toast.LENGTH_LONG).show()
-                );
+                runOnUiThread(() -> {
+                    Toast.makeText(Login.this, "Login failed: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                    Log.e("LOGIN_ERROR", "API call failed: " + e.getMessage());
+                });
             }
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 String resp = response.body().string().trim();
+                Log.d("LOGIN_RESPONSE", "Server Response: " + resp); // Debugging API response
 
                 try {
                     JSONObject jsonResponse = new JSONObject(resp);
@@ -97,7 +111,7 @@ public class Login extends AppCompatActivity {
 
                     runOnUiThread(() -> {
                         Toast.makeText(Login.this, message, Toast.LENGTH_LONG).show();
-                        if (status.equals("success")) {
+                        if ("success".equals(status)) {
                             Intent intent = new Intent(Login.this, activity_home.class);
                             startActivity(intent);
                             finish();
@@ -105,6 +119,7 @@ public class Login extends AppCompatActivity {
                     });
 
                 } catch (JSONException e) {
+                    Log.e("LOGIN_ERROR", "JSON Parsing Error: " + e.getMessage());
                     runOnUiThread(() ->
                             Toast.makeText(Login.this, "Invalid server response", Toast.LENGTH_LONG).show()
                     );
