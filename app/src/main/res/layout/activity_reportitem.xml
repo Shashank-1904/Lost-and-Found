@@ -119,14 +119,14 @@
                 android:id="@+id/editTextDate"
                 android:layout_width="320dp"
                 android:layout_height="55dp"
+                android:layout_marginTop="10dp"
                 android:background="@drawable/custom_edittext"
+                android:clickable="true"
                 android:drawableStart="@drawable/baseline_account_circle_24"
                 android:drawablePadding="10dp"
                 android:elevation="5dp"
-                android:hint="Date Lost"
                 android:focusable="false"
-                android:clickable="true"
-                android:layout_marginTop="10dp"
+                android:hint="Date Lost"
                 android:paddingStart="13dp" />
 
             <EditText
