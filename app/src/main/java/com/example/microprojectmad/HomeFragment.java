@@ -46,6 +46,13 @@ public class HomeFragment extends Fragment {
         adapter = new ItemAdapter(getContext(), itemList);
         recyclerView.setAdapter(adapter);
 
+        recyclerView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
         // Fetch Data from API
         fetchData();
 
