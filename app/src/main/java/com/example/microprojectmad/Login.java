@@ -109,11 +109,13 @@ public class Login extends AppCompatActivity {
                         JSONObject user = jsonResponse.getJSONObject("user");
                         String storedPass = user.getString("userpass");
                         String username = user.getString("username"); // Assume API returns username
+                        String uid = user.getString("useruid"); // Assume API returns username
 
                         if (enteredPass.equals(storedPass)) {
                             // Save user session
                             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(Login.this);
                             SharedPreferences.Editor editor = preferences.edit();
+                            editor.putString("uid", uid);
                             editor.putString("username", username);
                             editor.putString("email", email);
                             editor.putBoolean("isLoggedIn", true);
