@@ -31,7 +31,7 @@ public class ProfileFragment extends Fragment {
 
     Button logout;
     EditText name, email;
-    private static final String API_URL = "https://lostandfound.creativeitservicess.com/api/fetch_userdetails.php"; // API URL
+    private static final String API_URL = "https://aribaacademy.com/lost-and-found/api/fetch_userdetails.php"; // API URL
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -61,7 +61,6 @@ public class ProfileFragment extends Fragment {
     private void fetchData(String uid) {
         OkHttpClient client = new OkHttpClient();
 
-        // Sending UID in POST request
         RequestBody requestBody = new FormBody.Builder()
                 .add("uid", uid)
                 .build();
@@ -71,19 +70,31 @@ public class ProfileFragment extends Fragment {
                 .post(requestBody)
                 .build();
 
+        Log.d("API_REQUEST", "Sending request to: " + API_URL + " with UID: " + uid);
+
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
                 Log.e("API_ERROR", "Request failed: " + e.getMessage());
+                if (getActivity() != null) {
+                    getActivity().runOnUiThread(() ->
+                            Toast.makeText(getContext(), "Network error: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+                }
             }
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                if (response.isSuccessful() && response.body() != null) {
-                    String responseData = response.body().string();
+                String responseData = response.body().string();
+                Log.d("API_RESPONSE", "Response: " + responseData);
+
+                if (response.isSuccessful()) {
                     parseJson(responseData);
                 } else {
-                    Log.e("API_ERROR", "Response not successful");
+                    Log.e("API_ERROR", "Response not successful: " + response.code());
+                    if (getActivity() != null) {
+                        getActivity().runOnUiThread(() ->
+                                Toast.makeText(getContext(), "Server error: " + response.code(), Toast.LENGTH_SHORT).show());
+                    }
                 }
             }
         });
@@ -91,19 +102,26 @@ public class ProfileFragment extends Fragment {
 
     private void parseJson(String json) {
         try {
-            JSONObject jsonObject = new JSONObject(json); // Parsing as JSON object
-            String userName = jsonObject.getString("username");
-            String userEmail = jsonObject.getString("useremail");
+            JSONObject jsonObject = new JSONObject(json);
 
-            if (getActivity() != null) {
-                getActivity().runOnUiThread(() -> {
-                    name.setText(userName);
-                    email.setText(userEmail);
-                });
+            // First check if the response indicates success
+            if (jsonObject.has("status") && jsonObject.getString("status").equals("success")) {
+                String userName = jsonObject.getString("username");
+                String userEmail = jsonObject.getString("useremail");
+
+                if (getActivity() != null) {
+                    getActivity().runOnUiThread(() -> {
+                        name.setText(userName);
+                        email.setText(userEmail);
+                    });
+                }
+            } else {
+                String errorMsg = jsonObject.optString("message", "Unknown error");
+                Log.e("API_ERROR", "Server returned error: " + errorMsg);
             }
-
         } catch (Exception e) {
             Log.e("JSON_ERROR", "Parsing error: " + e.getMessage());
+            Log.d("RAW_RESPONSE", "Response was: " + json); // Log the raw response
         }
     }
 
