@@ -23,7 +23,7 @@ import okhttp3.Response;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    private static final String BASE_URL = "https://lostandfound.creativeitservicess.com/api/user_register.php";
+    private static final String BASE_URL = "https://aribaacademy.com/lost-and-found/api/user_register.php";
 
     private OkHttpClient client = new OkHttpClient();
 

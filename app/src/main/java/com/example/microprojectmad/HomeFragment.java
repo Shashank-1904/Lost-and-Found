@@ -30,7 +30,7 @@ public class HomeFragment extends Fragment {
     private RecyclerView recyclerView;
     private ItemAdapter adapter;
     private List<Item> itemList;
-    private static final String API_URL = "https://lostandfound.creativeitservicess.com/api/fetch_reportitems.php"; // API URL
+    private static final String API_URL = "https://aribaacademy.com/lost-and-found/api/fetch_reportitems.php"; // API URL
 
     @Nullable
     @Override

@@ -28,7 +28,7 @@ import okhttp3.Response;
 
 public class Login extends AppCompatActivity {
 
-    private static final String BASE_URL = "https://lostandfound.creativeitservicess.com/api/user_login.php"; // API URL
+    private static final String BASE_URL = "https://aribaacademy.com/lost-and-found/api/user_login.php"; // API URL
     private OkHttpClient client = new OkHttpClient();
 
     EditText email, password;
@@ -101,6 +101,11 @@ public class Login extends AppCompatActivity {
                 String resp = response.body().string().trim();
                 Log.d("LOGIN_RESPONSE", "Server Response: " + resp);
 
+                // Remove any non-JSON prefix if exists
+                if (resp.startsWith("Successfull")) {
+                    resp = resp.substring("Successfull".length()).trim();
+                }
+
                 try {
                     JSONObject jsonResponse = new JSONObject(resp);
                     String status = jsonResponse.getString("status");
@@ -108,8 +113,8 @@ public class Login extends AppCompatActivity {
                     if ("success".equals(status)) {
                         JSONObject user = jsonResponse.getJSONObject("user");
                         String storedPass = user.getString("userpass");
-                        String username = user.getString("username"); // Assume API returns username
-                        String uid = user.getString("useruid"); // Assume API returns username
+                        String username = user.getString("username");
+                        String uid = user.getString("useruid");
 
                         if (enteredPass.equals(storedPass)) {
                             // Save user session
