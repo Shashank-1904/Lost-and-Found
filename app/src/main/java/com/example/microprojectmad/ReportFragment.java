@@ -39,7 +39,7 @@ import okhttp3.internal.io.FileSystem;
 
 public class ReportFragment extends Fragment {
 
-    private static final String BASE_URL = "https://lostandfound.creativeitservicess.com/api/insert_reportitems.php";
+    private static final String BASE_URL = "https://aribaacademy.com/lost-and-found/api/insert_reportitems.php";
 
     private OkHttpClient client = new OkHttpClient();
 
