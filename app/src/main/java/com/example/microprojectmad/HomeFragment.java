@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -30,7 +31,7 @@ public class HomeFragment extends Fragment {
     private RecyclerView recyclerView;
     private ItemAdapter adapter;
     private List<Item> itemList;
-    private static final String API_URL = "https://aribaacademy.com/lost-and-found/api/fetch_reportitems.php"; // API URL
+    private static final String API_URL = "https://aribaacademy.com/lost-and-found/api/fetch_reportitems.php";
 
     @Nullable
     @Override
@@ -45,13 +46,6 @@ public class HomeFragment extends Fragment {
         itemList = new ArrayList<>();
         adapter = new ItemAdapter(getContext(), itemList);
         recyclerView.setAdapter(adapter);
-
-        recyclerView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
 
         // Fetch Data from API
         fetchData();
@@ -70,16 +64,18 @@ public class HomeFragment extends Fragment {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
                 Log.e("API_ERROR", "Request failed: " + e.getMessage());
+                showToast("Network error: " + e.getMessage());
             }
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 if (response.isSuccessful() && response.body() != null) {
                     String responseData = response.body().string();
-                    Log.d("API_RESPONSE", "Data: " + responseData); // Log response for debugging
+                    Log.d("API_RESPONSE", "Data: " + responseData);
                     parseJson(responseData);
                 } else {
-                    Log.e("API_ERROR", "Response not successful");
+                    Log.e("API_ERROR", "Response not successful: " + response.code());
+                    showToast("Server error: " + response.code());
                 }
             }
         });
@@ -87,25 +83,53 @@ public class HomeFragment extends Fragment {
 
     private void parseJson(String json) {
         try {
-            JSONArray jsonArray = new JSONArray(json);
+            Log.d("RAW_JSON", json); // Add this to see the exact response
 
-            // Clear old data before adding new items
-            itemList.clear();
+            JSONObject jsonResponse = new JSONObject(json);
+            String status = jsonResponse.getString("status");
 
-            for (int i = 0; i < jsonArray.length(); i++) {
-                JSONObject obj = jsonArray.getJSONObject(i);
-                String title = obj.getString("reportitemname");
-                String date = obj.getString("reportitemdate");
-                itemList.add(new Item(title, date));
+            if (status.equals("success")) {
+                JSONArray itemsArray = jsonResponse.getJSONArray("data"); // Changed from "res" to "data"
+
+                itemList.clear();
+
+                for (int i = 0; i < itemsArray.length(); i++) {
+                    JSONObject itemObj = itemsArray.getJSONObject(i);
+
+                    // Make sure these field names match exactly with your database
+                    String title = itemObj.getString("reportitemname");
+                    String date = itemObj.getString("reportitemdate");
+
+                    itemList.add(new Item(title, date));
+                }
+
+                updateUI();
+            } else {
+                String errorMsg = jsonResponse.optString("message", "Unknown error");
+                showToast(errorMsg);
             }
-
-            // Ensure fragment is attached before updating UI
-            if (getActivity() != null) {
-                getActivity().runOnUiThread(() -> adapter.notifyDataSetChanged());
-            }
-
         } catch (Exception e) {
             Log.e("JSON_ERROR", "Parsing error: " + e.getMessage());
+            Log.e("JSON_CONTENT", "Failed to parse: " + json); // Log the problematic JSON
+            showToast("Error parsing data: " + e.getMessage());
+        }
+    }
+
+    private void updateUI() {
+        if (getActivity() != null) {
+            getActivity().runOnUiThread(() -> {
+                adapter.notifyDataSetChanged();
+                if (itemList.isEmpty()) {
+                    showToast("No items found");
+                }
+            });
+        }
+    }
+
+    private void showToast(String message) {
+        if (getActivity() != null) {
+            getActivity().runOnUiThread(() ->
+                    Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show());
         }
     }
 }

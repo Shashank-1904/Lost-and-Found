@@ -31,34 +31,38 @@ public class ProfileFragment extends Fragment {
 
     Button logout;
     EditText name, email;
-    private static final String API_URL = "https://aribaacademy.com/lost-and-found/api/fetch_userdetails.php"; // API URL
+    private static final String API_URL = "https://aribaacademy.com/lost-and-found/api/fetch_userdetails.php";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
 
-        // Get reference to UI elements
         name = view.findViewById(R.id.uname);
         email = view.findViewById(R.id.email);
         logout = view.findViewById(R.id.logout);
 
-        // Fetch UID from SharedPreferences
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
-        String uid = sharedPreferences.getString("uid", ""); // Default is empty string if not found
+        // Make fields non-editable
+        name.setEnabled(false);
+        email.setEnabled(false);
 
-        if (!uid.isEmpty()) {
-            fetchData(uid);
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
+        String uid = sharedPreferences.getString("uid", null);
+
+        if (uid != null && !uid.isEmpty()) {
+            fetchUserData(uid);
         } else {
-            Log.e("PROFILE_ERROR", "User UID not found in SharedPreferences");
+            showToast("User not logged in");
+            redirectToLogin();
         }
 
-        // Handle Logout Button Click
+
+
         logout.setOnClickListener(v -> logoutUser());
 
         return view;
     }
 
-    private void fetchData(String uid) {
+    private void fetchUserData(String uid) {
         OkHttpClient client = new OkHttpClient();
 
         RequestBody requestBody = new FormBody.Builder()
@@ -70,72 +74,71 @@ public class ProfileFragment extends Fragment {
                 .post(requestBody)
                 .build();
 
-        Log.d("API_REQUEST", "Sending request to: " + API_URL + " with UID: " + uid);
-
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                Log.e("API_ERROR", "Request failed: " + e.getMessage());
-                if (getActivity() != null) {
-                    getActivity().runOnUiThread(() ->
-                            Toast.makeText(getContext(), "Network error: " + e.getMessage(), Toast.LENGTH_SHORT).show());
-                }
+                Log.e("API_ERROR", "Request failed", e);
+                requireActivity().runOnUiThread(() ->
+                        showToast("Network error: " + e.getMessage()));
             }
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                String responseData = response.body().string();
-                Log.d("API_RESPONSE", "Response: " + responseData);
+                if (!response.isSuccessful()) {
+                    requireActivity().runOnUiThread(() ->
+                            showToast("Server error: " + response.code()));
+                    return;
+                }
 
-                if (response.isSuccessful()) {
-                    parseJson(responseData);
-                } else {
-                    Log.e("API_ERROR", "Response not successful: " + response.code());
-                    if (getActivity() != null) {
-                        getActivity().runOnUiThread(() ->
-                                Toast.makeText(getContext(), "Server error: " + response.code(), Toast.LENGTH_SHORT).show());
+                try {
+                    String responseData = response.body().string();
+                    Log.d("API_RESPONSE", "Raw response: " + responseData);
+
+                    // Remove the "Successfull" prefix if it exists
+                    if (responseData.startsWith("Successfull")) {
+                        responseData = responseData.substring("Successfull".length());
                     }
+
+                    // Parse the JSON part
+                    JSONObject json = new JSONObject(responseData.trim());
+
+                    if (json.getString("status").equalsIgnoreCase("success")) {
+                        String username = json.getString("username");
+                        String userEmail = json.getString("useremail");
+
+                        Log.d("PROFILE_DATA", "Username: " + username + ", Email: " + userEmail);
+
+                        requireActivity().runOnUiThread(() -> {
+                            name.setText(username);
+                            email.setText(userEmail);
+                        });
+                    } else {
+                        String errorMsg = json.optString("message", "Unknown error");
+                        requireActivity().runOnUiThread(() ->
+                                showToast("Error: " + errorMsg));
+                    }
+                } catch (Exception e) {
+                    Log.e("PARSE_ERROR", "Error parsing response: ", e);
+                    requireActivity().runOnUiThread(() ->
+                            showToast("Error processing server response"));
                 }
             }
         });
     }
 
-    private void parseJson(String json) {
-        try {
-            JSONObject jsonObject = new JSONObject(json);
-
-            // First check if the response indicates success
-            if (jsonObject.has("status") && jsonObject.getString("status").equals("success")) {
-                String userName = jsonObject.getString("username");
-                String userEmail = jsonObject.getString("useremail");
-
-                if (getActivity() != null) {
-                    getActivity().runOnUiThread(() -> {
-                        name.setText(userName);
-                        email.setText(userEmail);
-                    });
-                }
-            } else {
-                String errorMsg = jsonObject.optString("message", "Unknown error");
-                Log.e("API_ERROR", "Server returned error: " + errorMsg);
-            }
-        } catch (Exception e) {
-            Log.e("JSON_ERROR", "Parsing error: " + e.getMessage());
-            Log.d("RAW_RESPONSE", "Response was: " + json); // Log the raw response
-        }
+    private void logoutUser() {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
+        sharedPreferences.edit().clear().apply();
+        showToast("Logged out successfully");
+        redirectToLogin();
     }
 
-    private void logoutUser() {
-        // Clear SharedPreferences
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.clear();
-        editor.apply();
+    private void showToast(String message) {
+        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+    }
 
-        Toast.makeText(getContext(), "Logged out successfully!", Toast.LENGTH_SHORT).show();
-
-        Intent intent = new Intent(getActivity(), Login.class);
-        startActivity(intent);
+    private void redirectToLogin() {
+        startActivity(new Intent(getActivity(), Login.class));
         requireActivity().finish();
     }
 }
