@@ -29,7 +29,7 @@ import java.io.IOException;
 
 public class ProfileFragment extends Fragment {
 
-    Button logout;
+    Button logout,changepassword;
     EditText name, email;
     private static final String API_URL = "https://aribaacademy.com/lost-and-found/api/fetch_userdetails.php";
 
@@ -40,6 +40,8 @@ public class ProfileFragment extends Fragment {
         name = view.findViewById(R.id.uname);
         email = view.findViewById(R.id.email);
         logout = view.findViewById(R.id.logout);
+        changepassword = view.findViewById(R.id.changepassword);
+
 
         // Make fields non-editable
         name.setEnabled(false);
@@ -55,6 +57,15 @@ public class ProfileFragment extends Fragment {
             redirectToLogin();
         }
 
+
+        changepassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), PasswordConfirmActivity.class);
+                intent.putExtra("uid", uid);
+                startActivity(intent);
+            }
+        });
 
 
         logout.setOnClickListener(v -> logoutUser());
