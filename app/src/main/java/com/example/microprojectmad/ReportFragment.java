@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
@@ -23,7 +24,9 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Calendar;
 
 import okhttp3.Call;
@@ -158,48 +161,152 @@ public class ReportFragment extends Fragment {
         saveData(uid, name, color, reward, description, date, category, selectedImageUri);
     }
 
-    private void saveData(String uid, String name, String color, String reward, String description, String date, String category, Uri imageUri) {
-//        File imageFile = new File(FileUtils.getPath(requireContext(), imageUri));
+//    private void saveData(String uid, String name, String color, String reward, String description,
+//                          String date, String category, Uri imageUri) {
+//        try {
+//            // Generate unique filename
+//            String extension = getFileExtension(imageUri);
+//            String filename = "IMG_" + System.currentTimeMillis() + "." + extension;
+//
+//            // Save image to external storage: Pictures/LostAndFound
+//            File directory = new File(Environment.getExternalStoragePublicDirectory(
+//                    Environment.DIRECTORY_PICTURES), "LostAndFound");
+//
+//            if (!directory.exists()) {
+//                directory.mkdirs(); // create folder if not exist
+//            }
+//
+//            File imageFile = new File(directory, filename);
+//            InputStream inputStream = requireContext().getContentResolver().openInputStream(imageUri);
+//            FileOutputStream outputStream = new FileOutputStream(imageFile);
+//
+//            byte[] buffer = new byte[1024];
+//            int length;
+//            while ((length = inputStream.read(buffer)) > 0) {
+//                outputStream.write(buffer, 0, length);
+//            }
+//
+//            outputStream.close();
+//            inputStream.close();
+//
+//            // Upload data to server (excluding actual image)
+//            RequestBody requestBody = new FormBody.Builder()
+//                    .add("uid", uid)
+//                    .add("iname", name)
+//                    .add("icolor", color)
+//                    .add("ireward", reward)
+//                    .add("idscr", description)
+//                    .add("idate", date)
+//                    .add("icategory", category)
+//                    .add("istatus", "Pending")
+//                    .add("imageName", filename)
+//                    .build();
+//
+//            Request request = new Request.Builder()
+//                    .url(BASE_URL)
+//                    .post(requestBody)
+//                    .build();
+//
+//            client.newCall(request).enqueue(new Callback() {
+//                @Override
+//                public void onFailure(@NonNull Call call, @NonNull IOException e) {
+//                    requireActivity().runOnUiThread(() ->
+//                            Toast.makeText(requireContext(), "Failed: " + e.getMessage(), Toast.LENGTH_LONG).show()
+//                    );
+//                }
+//
+//                @Override
+//                public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+//                    String resp = response.body().string();
+//                    requireActivity().runOnUiThread(() -> {
+//                        if (response.isSuccessful()) {
+//                            Toast.makeText(requireContext(), "Report submitted successfully", Toast.LENGTH_LONG).show();
+//                            resetForm();
+//                        } else {
+//                            Toast.makeText(requireContext(), "Failed: " + resp, Toast.LENGTH_LONG).show();
+//                        }
+//                    });
+//                }
+//            });
+//
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//            requireActivity().runOnUiThread(() ->
+//                    Toast.makeText(requireContext(), "Error saving image: " + e.getMessage(), Toast.LENGTH_LONG).show()
+//            );
+//        }
+//    }
 
-        RequestBody requestBody = new MultipartBody.Builder()
-                .setType(MultipartBody.FORM)
-                .addFormDataPart("uid",uid)
-                .addFormDataPart("iname", name)
-                .addFormDataPart("icolor", color)
-                .addFormDataPart("ireward", reward)
-                .addFormDataPart("idscr", description)
-                .addFormDataPart("idate", date)
-                .addFormDataPart("icategory", category)
-                .addFormDataPart("istatus", "Pending")
-//                .addFormDataPart("image", imageFile.getName(),
-//                        RequestBody.create(imageFile, MediaType.parse("image/*")))
-                .build();
+    private void saveData(String uid, String name, String color, String reward, String description,
+                          String date, String category, Uri imageUri) {
+        try {
+            InputStream inputStream = requireContext().getContentResolver().openInputStream(imageUri);
+            byte[] fileBytes = new byte[inputStream.available()];
+            inputStream.read(fileBytes);
+            inputStream.close();
 
-        Request request = new Request.Builder().url(BASE_URL).post(requestBody).build();
+            // Generate unique filename
+            String extension = getFileExtension(imageUri);
+            String filename = "IMG_" + System.currentTimeMillis() + "." + extension;
 
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                requireActivity().runOnUiThread(() ->
-                        Toast.makeText(requireContext(), "Failed: " + e.getMessage(), Toast.LENGTH_LONG).show()
-                );
-            }
+            RequestBody requestBody = new MultipartBody.Builder()
+                    .setType(MultipartBody.FORM)
+                    .addFormDataPart("uid", uid)
+                    .addFormDataPart("iname", name)
+                    .addFormDataPart("icolor", color)
+                    .addFormDataPart("ireward", reward)
+                    .addFormDataPart("idscr", description)
+                    .addFormDataPart("idate", date)
+                    .addFormDataPart("icategory", category)
+                    .addFormDataPart("istatus", "Pending")
+                    .addFormDataPart("image", filename,
+                            RequestBody.create(MediaType.parse("image/*"), fileBytes))
+                    .build();
 
-            @Override
-            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                String resp = response.body().string();
-                requireActivity().runOnUiThread(() -> {
-                    if (response.isSuccessful()) {
-                        Toast.makeText(requireContext(), "Report submitted successfully", Toast.LENGTH_LONG).show();
-                        resetForm();
-                    } else {
-                        Toast.makeText(requireContext(), "Failed: " + resp, Toast.LENGTH_LONG).show();
-                    }
-                });
-            }
-        });
+            Request request = new Request.Builder()
+                    .url(BASE_URL)
+                    .post(requestBody)
+                    .build();
+
+            client.newCall(request).enqueue(new Callback() {
+                @Override
+                public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                    requireActivity().runOnUiThread(() ->
+                            Toast.makeText(requireContext(), "Failed: " + e.getMessage(), Toast.LENGTH_LONG).show()
+                    );
+                }
+
+                @Override
+                public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                    String resp = response.body().string();
+                    requireActivity().runOnUiThread(() -> {
+                        if (response.isSuccessful()) {
+                            Toast.makeText(requireContext(), "Report submitted successfully", Toast.LENGTH_LONG).show();
+                            resetForm();
+                        } else {
+                            Toast.makeText(requireContext(), "Failed: " + resp, Toast.LENGTH_LONG).show();
+                        }
+                    });
+                }
+            });
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            requireActivity().runOnUiThread(() ->
+                    Toast.makeText(requireContext(), "Error processing image: " + e.getMessage(), Toast.LENGTH_LONG).show()
+            );
+        }
     }
 
+
+    private String getFileExtension(Uri uri) {
+        String extension = "";
+        String mimeType = requireContext().getContentResolver().getType(uri);
+        if (mimeType != null) {
+            extension = mimeType.substring(mimeType.indexOf("/") + 1);
+        }
+        return extension;
+    }
     private void resetForm() {
         iname.setText("");
         icolor.setText("");

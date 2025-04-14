@@ -4,151 +4,185 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginBottom="100dp"
-    android:layout_marginTop="80dp"
     android:background="@color/white"
+    android:layout_marginBottom="100dp"
     tools:context=".ReportFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="20dp">
-        <!-- Main ScrollView Below Toolbar -->
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp">
+
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:fillViewport="true">
+            android:fillViewport="true"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="16dp"
+                android:padding="20dp"
                 android:gravity="center_horizontal">
 
-                <!-- Image Section -->
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
+                <!-- Title -->
+                <TextView
+                    android:id="@+id/toolbar_title"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp">
+                    android:text="Report New Item"
+                    android:textSize="24sp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="10dp"
+                    android:layout_gravity="center" />
 
-                    <TextView
-                        android:id="@+id/toolbar_title"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="Report New Item"
-                        android:textColor="@color/black"
-                        android:textSize="22sp"
-                        android:textStyle="bold"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <View
-                        android:id="@+id/view2"
-                        android:layout_width="0dp"
-                        android:layout_height="300dp"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginTop="15dp"
-                        android:layout_marginEnd="16dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                <!-- Image Card -->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/view2"
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    android:layout_marginBottom="16dp"
+                    android:layout_marginTop="10dp"
+                    app:cardCornerRadius="20dp"
+                    app:cardElevation="6dp">
 
                     <com.google.android.material.imageview.ShapeableImageView
-                        android:layout_width="250dp"
-                        android:layout_height="250dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
                         android:scaleType="centerCrop"
-                        app:strokeColor="@android:color/black"
-                        app:strokeWidth="2dp"
-                        app:shapeAppearanceOverlay="@style/RoundedImageView"
                         android:src="@drawable/reportimg"
-                        app:layout_constraintBottom_toBottomOf="@+id/view2"
-                        app:layout_constraintEnd_toEndOf="@+id/view2"
-                        app:layout_constraintStart_toStartOf="@+id/view2"
-                        app:layout_constraintTop_toTopOf="@+id/view2" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                        app:strokeColor="@android:color/darker_gray"
+                        app:strokeWidth="1dp"
+                        app:shapeAppearanceOverlay="@style/RoundedImageView" />
+                </androidx.cardview.widget.CardView>
 
                 <!-- Input Fields -->
-                <EditText
-                    android:id="@+id/iname"
-                    android:layout_width="320dp"
-                    android:layout_height="55dp"
-                    android:background="@drawable/custom_edittext"
-                    android:hint="Item Name"
-                    android:inputType="text"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:paddingStart="13dp" />
+                    app:boxBackgroundMode="outline"
+                    app:boxCornerRadiusTopStart="12dp"
+                    app:boxCornerRadiusTopEnd="12dp"
+                    app:boxCornerRadiusBottomStart="12dp"
+                    app:boxCornerRadiusBottomEnd="12dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/iname"
+                        android:layout_width="match_parent"
+                        android:layout_height="55dp"
+                        android:hint="Item Name"
+                        android:inputType="text" />
+                </com.google.android.material.textfield.TextInputLayout>
 
                 <Spinner
                     android:id="@+id/spinnerCategory"
-                    android:layout_width="320dp"
+                    android:layout_width="match_parent"
                     android:layout_height="55dp"
                     android:background="@drawable/custom_edittext"
-                    android:paddingStart="13dp"
-                    android:layout_marginTop="10dp" />
-
-                <EditText
-                    android:id="@+id/icolor"
-                    android:layout_width="320dp"
-                    android:layout_height="55dp"
-                    android:background="@drawable/custom_edittext"
-                    android:hint="Color"
-                    android:inputType="text"
                     android:layout_marginTop="10dp"
                     android:paddingStart="13dp" />
 
-                <EditText
-                    android:id="@+id/editTextDate"
-                    android:layout_width="320dp"
-                    android:layout_height="55dp"
-                    android:background="@drawable/custom_edittext"
-                    android:hint="Date Lost"
-                    android:focusable="false"
-                    android:clickable="true"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:paddingStart="13dp" />
+                    app:boxBackgroundMode="outline"
+                    app:boxCornerRadiusTopStart="12dp"
+                    app:boxCornerRadiusTopEnd="12dp"
+                    app:boxCornerRadiusBottomStart="12dp"
+                    app:boxCornerRadiusBottomEnd="12dp">
 
-                <EditText
-                    android:id="@+id/ireward"
-                    android:layout_width="320dp"
-                    android:layout_height="55dp"
-                    android:background="@drawable/custom_edittext"
-                    android:hint="Reward"
-                    android:inputType="text"
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/icolor"
+                        android:layout_width="match_parent"
+                        android:layout_height="55dp"
+                        android:hint="Color"
+                        android:inputType="text" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:paddingStart="13dp" />
+                    app:boxBackgroundMode="outline"
+                    app:boxCornerRadiusTopStart="12dp"
+                    app:boxCornerRadiusTopEnd="12dp"
+                    app:boxCornerRadiusBottomStart="12dp"
+                    app:boxCornerRadiusBottomEnd="12dp">
 
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/editTextDate"
+                        android:layout_width="match_parent"
+                        android:layout_height="55dp"
+                        android:hint="Date Lost"
+                        android:focusable="false"
+                        android:clickable="true" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    app:boxBackgroundMode="outline"
+                    app:boxCornerRadiusTopStart="12dp"
+                    app:boxCornerRadiusTopEnd="12dp"
+                    app:boxCornerRadiusBottomStart="12dp"
+                    app:boxCornerRadiusBottomEnd="12dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/ireward"
+                        android:layout_width="match_parent"
+                        android:layout_height="55dp"
+                        android:hint="Reward"
+                        android:inputType="text" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- File Button -->
                 <Button
                     android:id="@+id/btnSelectFile"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:text="Select File"
                     android:textSize="16sp"
-                    android:layout_marginTop="10dp"
-                    android:backgroundTint="#272e4c"
-                    android:textColor="@android:color/white" />
+                    android:backgroundTint="#6A1B9A"
+                    android:textColor="@android:color/white"
+                    android:layout_marginTop="10dp" />
 
+                <!-- Preview Image -->
                 <ImageView
                     android:id="@+id/imagePreview"
                     android:layout_width="200dp"
                     android:layout_height="200dp"
                     android:scaleType="centerCrop"
                     android:layout_marginTop="10dp"
-                    android:visibility="gone" />
+                    android:visibility="gone"
+                    android:background="@drawable/rounded_preview_bg" />
 
-                <EditText
-                    android:id="@+id/idscr"
-                    android:layout_width="320dp"
-                    android:layout_height="100dp"
-                    android:background="@drawable/custom_edittext"
-                    android:hint="Description"
-                    android:inputType="textMultiLine"
+                <!-- Description -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:paddingStart="13dp"
-                    android:gravity="top" />
+                    app:boxBackgroundMode="outline"
+                    app:boxCornerRadiusTopStart="12dp"
+                    app:boxCornerRadiusTopEnd="12dp"
+                    app:boxCornerRadiusBottomStart="12dp"
+                    app:boxCornerRadiusBottomEnd="12dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/idscr"
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:hint="Description"
+                        android:gravity="top"
+                        android:inputType="textMultiLine"
+                        android:maxLines="4" />
+                </com.google.android.material.textfield.TextInputLayout>
 
                 <!-- Submit Button -->
                 <Button
@@ -158,7 +192,7 @@
                     android:text="Report Item"
                     android:textSize="18sp"
                     android:textColor="@android:color/white"
-                    android:backgroundTint="#272e4c"
+                    android:backgroundTint="#6A1B9A"
                     android:layout_marginTop="20dp"
                     android:layout_marginBottom="20dp" />
             </LinearLayout>

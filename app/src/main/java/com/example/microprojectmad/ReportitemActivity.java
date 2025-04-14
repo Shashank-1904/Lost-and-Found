@@ -1,10 +1,12 @@
 package com.example.microprojectmad;
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -16,6 +18,11 @@ public class ReportitemActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reportitem);
+
+        Intent intent = getIntent();
+
+        String itemId = intent.getStringExtra("report_id");
+        Toast.makeText(ReportitemActivity.this, itemId, Toast.LENGTH_LONG);
 
         // Initialize Spinner
         Spinner spinnerCategory = findViewById(R.id.spinnerCategory);

@@ -83,24 +83,34 @@ public class HomeFragment extends Fragment {
 
     private void parseJson(String json) {
         try {
-            Log.d("RAW_JSON", json); // Add this to see the exact response
+            Log.d("RAW_JSON", json); // See raw response
+
+            // 👇 Strip any non-JSON prefix like "Successfull"
+            int jsonStart = json.indexOf("{");
+            if (jsonStart != -1) {
+                json = json.substring(jsonStart); // Keep only valid JSON
+            } else {
+                throw new Exception("Invalid JSON format");
+            }
 
             JSONObject jsonResponse = new JSONObject(json);
             String status = jsonResponse.getString("status");
 
             if (status.equals("success")) {
-                JSONArray itemsArray = jsonResponse.getJSONArray("data"); // Changed from "res" to "data"
+                JSONArray itemsArray = jsonResponse.getJSONArray("data");
 
                 itemList.clear();
 
                 for (int i = 0; i < itemsArray.length(); i++) {
                     JSONObject itemObj = itemsArray.getJSONObject(i);
-
-                    // Make sure these field names match exactly with your database
                     String title = itemObj.getString("reportitemname");
                     String date = itemObj.getString("reportitemdate");
+                    String uname = itemObj.getString("username");
+                    String iimage = itemObj.getString("reportitemimage");
+                    String rid = itemObj.getString("reportitemuid");
 
-                    itemList.add(new Item(title, date));
+                    iimage="https://aribaacademy.com/lost-and-found/uploads/"+iimage;
+                    itemList.add(new Item(rid, title, date, uname, iimage));
                 }
 
                 updateUI();
@@ -110,11 +120,10 @@ public class HomeFragment extends Fragment {
             }
         } catch (Exception e) {
             Log.e("JSON_ERROR", "Parsing error: " + e.getMessage());
-            Log.e("JSON_CONTENT", "Failed to parse: " + json); // Log the problematic JSON
+            Log.e("JSON_CONTENT", "Failed to parse: " + json);
             showToast("Error parsing data: " + e.getMessage());
         }
     }
-
     private void updateUI() {
         if (getActivity() != null) {
             getActivity().runOnUiThread(() -> {

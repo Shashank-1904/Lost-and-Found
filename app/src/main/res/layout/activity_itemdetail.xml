@@ -6,35 +6,49 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/light_gray_background"
     tools:context=".activity_itemdetail">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
+    <!-- App Bar with Back Button and Title -->
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:background="@color/white" >
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:elevation="4dp">
 
-        <ImageButton
-            android:layout_marginTop="5dp"
-            android:id="@+id/imagebtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/backarrow"
-            android:background="@color/white"
-            android:padding="5dp"/>
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/white">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Item Details"
-            android:textStyle="bold"
-            android:textAlignment="center"
-            android:layout_gravity="center"
-            android:textSize="25sp"
-            android:textColor="@color/black"
-            android:layout_marginTop="5dp"/>
-    </androidx.appcompat.widget.Toolbar>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
+                <ImageButton
+                    android:id="@+id/imagebtn"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_centerVertical="true"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:padding="8dp"
+                    android:src="@drawable/backarrow"
+                    android:tint="@color/primary_color" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="Item Details"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <!-- Main Content Area -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -44,186 +58,290 @@
         <ScrollView
             android:id="@+id/itemscrollview"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:fillViewport="true">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
+                <!-- Item Image with Card View -->
+                <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <View
-                        android:id="@+id/view2"
-                        android:layout_width="0dp"
-                        android:layout_height="350dp"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginEnd="16dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                    android:layout_height="300dp"
+                    android:layout_margin="16dp"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="4dp">
 
                     <com.google.android.material.imageview.ShapeableImageView
                         android:id="@+id/imgPic"
-                        android:layout_width="370dp"
-                        android:layout_height="340dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
                         android:scaleType="centerCrop"
-                        app:strokeColor="@android:color/black"
-                        app:strokeWidth="2dp"
-                        app:shapeAppearanceOverlay="@style/RoundedImageView"
                         android:src="@drawable/key"
-                        app:layout_constraintBottom_toBottomOf="@+id/view2"
-                        app:layout_constraintEnd_toEndOf="@+id/view2"
-                        app:layout_constraintStart_toStartOf="@+id/view2"
-                        app:layout_constraintTop_toTopOf="@+id/view2" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                        app:shapeAppearanceOverlay="@style/RoundedImageView" />
+                </androidx.cardview.widget.CardView>
 
-                <LinearLayout
+                <!-- Item Details Card -->
+                <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/title"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginTop="10dp"
-                        android:text="Item Name :"
-                        android:textColor="@color/black"
-                        android:textSize="17sp"
-                        android:textStyle="bold"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/category"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginTop="10dp"
-                        android:text="Category :"
-                        android:textColor="@color/black"
-                        android:textSize="17sp"
-                        android:textStyle="bold"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/date"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginTop="10dp"
-                        android:text="Date : "
-                        android:textColor="@color/black"
-                        android:textSize="17sp"
-                        android:textStyle="bold"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginTop="10dp"
-                        android:text="Reported By : "
-                        android:textColor="@color/black"
-                        android:textSize="17sp"
-                        android:textStyle="bold"/>
-
-                    <TextView
-                        android:id="@+id/ReportedName"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="30dp"
-                        android:layout_marginTop="5dp"
-                        android:text="Name : "
-                        android:textColor="@color/black"
-                        android:textSize="17sp"/>
-
-                    <TextView
-                        android:id="@+id/ReportedEmail"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="30dp"
-                        android:layout_marginTop="5dp"
-                        android:text="Email : "
-                        android:textColor="@color/black"
-                        android:textSize="17sp"/>
-
-                    <TextView
-                        android:id="@+id/ReportedPhone"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="30dp"
-                        android:layout_marginTop="5dp"
-                        android:text="Phone : "
-                        android:textColor="@color/black"
-                        android:textSize="17sp"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
                     android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp">
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="8dp"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="2dp"
+                    app:cardBackgroundColor="@color/white">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Description : "
-                        android:textStyle="bold"
-                        android:textColor="@color/black"
-                        android:textSize="17sp"
-                        android:layout_marginTop="10dp"/>
-
-                    <TextView
-                        android:id="@+id/color"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="15dp"
-                        android:layout_marginTop="5dp"
-                        android:text="Color : "
-                        android:textColor="@color/black"
-                        android:textSize="17sp"/>
-
-                    <TextView
-                        android:id="@+id/reward"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="15dp"
-                        android:layout_marginTop="5dp"
-                        android:text="Reward : "
-                        android:textColor="@color/black"
-                        android:textSize="17sp"/>
-
-                    <TextView
-                        android:id="@+id/description"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="15dp"
-                        android:layout_marginTop="5dp"
-                        android:text="This is a sample paragraph to demonstrate additional information under the reward section. You can replace this text with the actual description of the item."
-                        android:textColor="@color/black"
-                        android:textSize="16sp"/>
-                </LinearLayout>
+                        android:orientation="vertical"
+                        android:padding="16dp">
+
+                        <!-- Item Name -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginBottom="8dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Item Name:"
+                                android:textColor="@color/dark_gray"
+                                android:textSize="16sp"
+                                android:textStyle="bold"/>
+
+                            <TextView
+                                android:id="@+id/title"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="8dp"
+                                android:text="Car Keys"
+                                android:textColor="@color/black"
+                                android:textSize="16sp"/>
+                        </LinearLayout>
+
+                        <!-- Category -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginBottom="8dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Category:"
+                                android:textColor="@color/dark_gray"
+                                android:textSize="16sp"
+                                android:textStyle="bold"/>
+
+                            <TextView
+                                android:id="@+id/category"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="8dp"
+                                android:text="Personal Items"
+                                android:textColor="@color/black"
+                                android:textSize="16sp"/>
+                        </LinearLayout>
+
+                        <!-- Date -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginBottom="8dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Date:"
+                                android:textColor="@color/dark_gray"
+                                android:textSize="16sp"
+                                android:textStyle="bold"/>
+
+                            <TextView
+                                android:id="@+id/date"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="8dp"
+                                android:text="May 15, 2023"
+                                android:textColor="@color/black"
+                                android:textSize="16sp"/>
+                        </LinearLayout>
+
+                        <!-- Divider -->
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginBottom="8dp"
+                            android:background="@color/light_gray_divider"/>
+
+                        <!-- Reported By Section -->
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Reported By"
+                            android:textColor="@color/dark_gray"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:layout_marginBottom="8dp"/>
+
+                        <!-- Reporter Info -->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginBottom="8dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:layout_marginBottom="4dp">
+
+                                <ImageView
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
+                                    android:src="@drawable/man"
+                                    android:tint="@color/primary_color"/>
+
+                                <TextView
+                                    android:id="@+id/ReportedName"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="8dp"
+                                    android:text="John Doe"
+                                    android:textColor="@color/black"
+                                    android:textSize="16sp"/>
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:layout_marginBottom="4dp">
+
+                                <ImageView
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
+                                    android:src="@drawable/email"
+                                    android:tint="@color/primary_color"/>
+
+                                <TextView
+                                    android:id="@+id/ReportedEmail"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="8dp"
+                                    android:text="john@example.com"
+                                    android:textColor="@color/black"
+                                    android:textSize="16sp"/>
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <ImageView
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
+                                    android:src="@drawable/man"
+                                    android:tint="@color/primary_color"/>
+
+                                <TextView
+                                    android:id="@+id/ReportedPhone"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="8dp"
+                                    android:text="+1 234 567 890"
+                                    android:textColor="@color/black"
+                                    android:textSize="16sp"/>
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <!-- Divider -->
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginBottom="8dp"
+                            android:background="@color/light_gray_divider"/>
+
+                        <!-- Description Section -->
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Description"
+                            android:textColor="@color/dark_gray"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:layout_marginBottom="8dp"/>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginBottom="4dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Color:"
+                                android:textColor="@color/dark_gray"
+                                android:textSize="16sp"/>
+
+                            <TextView
+                                android:id="@+id/color"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="8dp"
+                                android:text="Silver"
+                                android:textColor="@color/black"
+                                android:textSize="16sp"/>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginBottom="12dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Reward:"
+                                android:textColor="@color/dark_gray"
+                                android:textSize="16sp"/>
+
+                            <TextView
+                                android:id="@+id/reward"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="8dp"
+                                android:text="$50"
+                                android:textColor="@color/accent_color"
+                                android:textSize="16sp"
+                                android:textStyle="bold"/>
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/description"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Found a set of car keys near the parking lot. The keychain has a small silver charm with a star shape. If these are yours, please contact me with the description of the keychain to verify ownership."
+                            android:textColor="@color/black"
+                            android:textSize="15sp"
+                            android:lineSpacingExtra="4dp"/>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
             </LinearLayout>
         </ScrollView>
     </LinearLayout>
@@ -233,14 +351,22 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
-        android:padding="10dp">
+        android:elevation="8dp"
+        android:orientation="vertical"
+        android:padding="16dp">
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btnClaim"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Claim"
-            android:textSize="18sp"/>
+            android:layout_height="48dp"
+            android:backgroundTint="@color/primary_color"
+            android:text="Claim Item"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            app:icon="@drawable/man"
+            app:iconGravity="textStart"
+            app:iconPadding="8dp"
+            app:iconTint="@color/white"/>
     </LinearLayout>
-
 </LinearLayout>
