@@ -16,18 +16,7 @@
             android:layout_height="wrap_content"
             android:src="@drawable/menu"
             android:background="@color/white"
-            android:padding="5dp"></ImageButton>
-
-        <ImageButton
-            android:id="@+id/notification"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/bell"
-            android:background="@color/white"
-            android:layout_gravity="end"
-            android:layout_marginTop="45dp"
-            android:layout_marginEnd="15dp"
-            android:padding="5dp"/>
+            android:padding="10dp"></ImageButton>
 
     </androidx.appcompat.widget.Toolbar>
 </LinearLayout>

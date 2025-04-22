@@ -3,15 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginTop="80sp"
     tools:context=".NotificationFragment">
 
-
-    <TextView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/notificationsRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Notification Fragment"
-        android:gravity="center"
-        android:textSize="20dp"/>
-
+        android:padding="8dp"
+        android:clipToPadding="false"/>
 
 </FrameLayout>

@@ -24,7 +24,7 @@ import com.google.android.material.navigation.NavigationView;
 public class activity_home extends AppCompatActivity {
 
     DrawerLayout drawerLayout;
-    ImageButton imageButton, notification;
+    ImageButton imageButton;
     FrameLayout frameLayout;
     BottomNavigationView bottomNavigationView;
 
@@ -40,7 +40,6 @@ public class activity_home extends AppCompatActivity {
 
         drawerLayout = findViewById(R.id.drawablelayout);
         imageButton = findViewById(R.id.imagebtn);
-        notification = findViewById(R.id.notification);
         frameLayout = findViewById(R.id.framelayout);
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
 
@@ -57,14 +56,6 @@ public class activity_home extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 drawerLayout.openDrawer(GravityCompat.START);
-            }
-        });
-
-        notification.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(activity_home.this, NotificationActivity.class);
-                startActivity(intent);
             }
         });
 

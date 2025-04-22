@@ -1,8 +1,11 @@
 package com.example.microprojectmad;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -32,12 +35,20 @@ public class activity_itemdetail extends AppCompatActivity {
     ImageView imgPic;
     Button btnClaim;
 
+    SharedPreferences sharedPreferences;
+    String uid, teacherid;
+
+
     private static final String API_URL = "https://aribaacademy.com/lost-and-found/api/fetch_reportItemdetails.php";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_itemdetail);
+
+        // Initialize shared preferences
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        uid = sharedPreferences.getString("uid", "");
 
         // Initialize views
         title = findViewById(R.id.title);
@@ -46,22 +57,25 @@ public class activity_itemdetail extends AppCompatActivity {
         ReportedName = findViewById(R.id.ReportedName);
         ReportedEmail = findViewById(R.id.ReportedEmail);
         color = findViewById(R.id.color);
-        reward = findViewById(R.id.reward);
         description = findViewById(R.id.description);
         imgPic = findViewById(R.id.imgPic);
         btnClaim = findViewById(R.id.btnClaim);
 
         // Get item ID from intent
         Intent intent = getIntent();
-
         String itemId = intent.getStringExtra("report_id");
+        String i = itemId;
         fetchItemDetails(itemId);
 
-        // Handle Claim Button Click
-        btnClaim.setOnClickListener(v -> {
-            Intent i = new Intent(activity_itemdetail.this, ReportitemActivity.class);
-            i.putExtra("report_id", itemId);
-            startActivity(i);
+        btnClaim.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent1 = new Intent(activity_itemdetail.this, ClaimItem.class);
+                intent1.putExtra("item_id", i);
+                intent1.putExtra("user_id", uid);
+                intent1.putExtra("teacher_id", teacherid);
+                startActivity(intent1);
+            }
         });
     }
 
@@ -70,6 +84,7 @@ public class activity_itemdetail extends AppCompatActivity {
 
         RequestBody requestBody = new FormBody.Builder()
                 .add("itemid", itemId)
+                .add("uid", uid) // Add UID to the request
                 .build();
 
         Request request = new Request.Builder()
@@ -113,11 +128,12 @@ public class activity_itemdetail extends AppCompatActivity {
                         String reportCategory = json.getString("category");
                         String reportDate = json.getString("date");
                         String reportColor = json.getString("color");
-                        String reportReward = json.getString("reward");
                         String reportDescription = json.getString("description");
                         String userName = json.getString("username");
                         String userEmail = json.getString("useremail");
+                        teacherid = json.getString("teacheruid");
                         String image = "https://aribaacademy.com/lost-and-found/uploads/" + json.getString("reportitemimage");
+                        int btnVisibility = json.getInt("btnVisibility"); // Get button visibility flag
 
                         // Update UI on main thread
                         runOnUiThread(() -> {
@@ -125,13 +141,15 @@ public class activity_itemdetail extends AppCompatActivity {
                             category.setText(reportCategory);
                             date.setText(reportDate);
                             color.setText(reportColor);
-                            reward.setText(reportReward);
                             description.setText(reportDescription);
                             ReportedName.setText(userName);
                             ReportedEmail.setText(userEmail);
 
-                            // Load image using Glide/Picasso if you have image URL
-                             Glide.with(activity_itemdetail.this).load(image).into(imgPic);
+                            // Set button visibility based on the flag
+                            btnClaim.setVisibility(btnVisibility == 1 ? View.VISIBLE : View.GONE);
+
+                            // Load image using Glide
+                            Glide.with(activity_itemdetail.this).load(image).into(imgPic);
                         });
                     } else {
                         String errorMsg = json.optString("message", "Unknown error");

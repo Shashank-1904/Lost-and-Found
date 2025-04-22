@@ -210,7 +210,7 @@
                                 <ImageView
                                     android:layout_width="20dp"
                                     android:layout_height="20dp"
-                                    android:src="@drawable/man"
+                                    android:src="@drawable/user"
                                     android:tint="@color/primary_color"/>
 
                                 <TextView
@@ -253,7 +253,7 @@
                                 <ImageView
                                     android:layout_width="20dp"
                                     android:layout_height="20dp"
-                                    android:src="@drawable/man"
+                                    android:src="@drawable/phonecall"
                                     android:tint="@color/primary_color"/>
 
                                 <TextView
@@ -308,30 +308,6 @@
                                 android:textSize="16sp"/>
                         </LinearLayout>
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:layout_marginBottom="12dp">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Reward:"
-                                android:textColor="@color/dark_gray"
-                                android:textSize="16sp"/>
-
-                            <TextView
-                                android:id="@+id/reward"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="8dp"
-                                android:text="$50"
-                                android:textColor="@color/accent_color"
-                                android:textSize="16sp"
-                                android:textStyle="bold"/>
-                        </LinearLayout>
-
                         <TextView
                             android:id="@+id/description"
                             android:layout_width="match_parent"
@@ -364,7 +340,7 @@
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="16sp"
-            app:icon="@drawable/man"
+            app:icon="@drawable/fastforward"
             app:iconGravity="textStart"
             app:iconPadding="8dp"
             app:iconTint="@color/white"/>

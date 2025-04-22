@@ -87,6 +87,14 @@
                     android:layout_marginTop="10dp"
                     android:paddingStart="13dp" />
 
+                <Spinner
+                    android:id="@+id/spinnerTeacher"
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+                    android:background="@drawable/custom_edittext"
+                    android:layout_marginTop="10dp"
+                    android:paddingStart="13dp" />
+
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -122,24 +130,6 @@
                         android:hint="Date Lost"
                         android:focusable="false"
                         android:clickable="true" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    app:boxBackgroundMode="outline"
-                    app:boxCornerRadiusTopStart="12dp"
-                    app:boxCornerRadiusTopEnd="12dp"
-                    app:boxCornerRadiusBottomStart="12dp"
-                    app:boxCornerRadiusBottomEnd="12dp">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/ireward"
-                        android:layout_width="match_parent"
-                        android:layout_height="55dp"
-                        android:hint="Reward"
-                        android:inputType="text" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <!-- File Button -->
